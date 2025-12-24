@@ -21,7 +21,7 @@ header{background:rgba(0,0,0,.55);backdrop-filter:blur(6px);padding:15px 20px;po
 .menu-btn span{display:block;height:3px;width:100%;background:#ff0033;border-radius:2px;}
 .side-menu{position:fixed;top:0;right:-260px;width:260px;height:100vh;background:rgba(0,0,0,.95);backdrop-filter:blur(10px);padding:25px;z-index:5;transition:.35s ease;border-left:1px solid rgba(255,0,51,.3);}
 .side-menu.active{right:0;}
-.side-menu h3{color:#ff0033;margin-top:25px;margin-bottom:20px;} /* Separamos del top */
+.side-menu h3{color:#ff0033;margin-top:25px;margin-bottom:20px;}
 .side-menu a{display:block;color:#fff;text-decoration:none;margin:15px 0;font-weight:500;}
 .side-menu a:hover{color:#ff0033;}
 .close-menu{position:absolute;top:10px;right:15px;background:none;border:none;color:#ff0033;font-size:26px;font-weight:700;cursor:pointer;}
@@ -88,7 +88,7 @@ footer{text-align:center;padding:25px;font-size:12px;color:#ffb3b3;opacity:.8;po
   <div class="card">
     <h3>🔥 MODS VIP</h3>
     <p>Acceso exclusivo a mods premium.</p>
-    <a href="https://brusmods.github.io/En-mantenimiento-/" class="btn-neon loader-btn">Entrar</a>
+    <a href="#" class="btn-neon vip-btn">Entrar</a>
   </div>
   <div class="card">
     <h3>🛠 HERRAMIENTAS</h3>
@@ -180,7 +180,6 @@ backgroundMusic.volume = 0.3;
 let musicOn = true;
 let musicStarted = false;
 
-// Iniciar música al abrir el menú por primera vez
 menuBtn.addEventListener("click", () => {
     sideMenu.classList.add("active");
     if (!musicStarted) {
@@ -189,7 +188,6 @@ menuBtn.addEventListener("click", () => {
     }
 });
 
-// Botón para apagar/encender música
 document.getElementById("musicToggleBtn").addEventListener("click", () => {
     if (musicOn) {
         backgroundMusic.pause();
@@ -208,11 +206,8 @@ let currentColor = 0;
 document.getElementById("colorToggleBtn").addEventListener("click",()=>{
   currentColor = (currentColor+1)%colors.length;
   let newColor = colors[currentColor];
-  // Cambiar color de fondo radial
   document.body.style.background = `radial-gradient(circle at top, ${newColor}, #000)`;
-  // Cambiar color de partículas
   particleColor = newColor;
-  // Cambiar borde de los botones
   document.querySelectorAll(".btn-neon").forEach(btn=>{
     btn.style.borderColor = newColor;
     btn.style.boxShadow = `0 0 20px ${newColor}, 0 0 40px ${newColor}`;
@@ -220,13 +215,13 @@ document.getElementById("colorToggleBtn").addEventListener("click",()=>{
   });
 });
 </script>
+
 <script>
 // KEYS válidas
-const validKeys = ["Brusmods23gg","Brusmods45gg","Brusmods23gg"];
+const validKeys = ["Brusmods23gg","Brusmods45gg","Brusmods23gg","BrusmodsVIP"];
+const secretLink = "https://brusmods.github.io/En-mantenimiento-/"; // <--- aquí pones tu link secreto
 
-// Crear popup dinámico
 function showKeyPopup() {
-  // Crear overlay
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
   overlay.style.top = 0;
@@ -239,7 +234,6 @@ function showKeyPopup() {
   overlay.style.justifyContent = "center";
   overlay.style.zIndex = 1000;
 
-  // Crear cuadro
   const box = document.createElement("div");
   box.style.background = "rgba(0,0,0,0.9)";
   box.style.backdropFilter = "blur(8px)";
@@ -262,34 +256,34 @@ function showKeyPopup() {
   overlay.appendChild(box);
   document.body.appendChild(overlay);
 
-  // Botón validar
   document.getElementById("validateKeyBtn").addEventListener("click", () => {
     const inputKey = document.getElementById("keyInput").value.trim();
     if (validKeys.includes(inputKey)) {
       alert("Key válida ✅ ¡Acceso desbloqueado!");
       overlay.remove();
+      window.location.href = secretLink; // solo aquí redirige
     } else {
       alert("❌ Key no válida");
     }
   });
 
-  // Botón cerrar
   document.getElementById("closeKeyBtn").addEventListener("click", () => {
     overlay.remove();
   });
 }
 
-// Seleccionar solo el botón "Entrar" de MODS VIP
+// Solo botón VIP
 document.querySelectorAll(".section .card").forEach(card => {
   const title = card.querySelector("h3");
   if (title && title.textContent.includes("MODS VIP")) {
-    const btn = card.querySelector("a.loader-btn");
+    const btn = card.querySelector("a.vip-btn");
     btn.addEventListener("click", e => {
-      e.preventDefault(); // Evitar loader normal
+      e.preventDefault();
       showKeyPopup();
     });
   }
 });
 </script>
+
 </body>
 </html>
