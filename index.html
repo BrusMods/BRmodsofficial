@@ -227,3 +227,44 @@ function animate(){
 }
 animate();
 </script>
+
+<!-- SONIDO -->
+<audio id="btnSound" src="click.m4a" preload="auto"></audio>
+
+<script>
+const btnSound = document.getElementById("btnSound");
+btnSound.volume = 0.4;
+
+// LINKS (CAMBIA DESPUÉS SI QUIERES)
+const links = {
+  verMods: "https://example.com/mods",
+  modsVip: "https://example.com/vip",
+  herramientas: "https://example.com/tools",
+  canal: "https://example.com/youtube"
+};
+
+document.querySelectorAll(".btn-neon").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    // sonido
+    btnSound.currentTime = 0;
+    btnSound.play();
+
+    const text = btn.textContent.toLowerCase();
+
+    setTimeout(()=>{
+      if(text.includes("ver mods")){
+        location.href = links.verMods;
+      }
+      else if(text.includes("entrar")){
+        location.href = links.modsVip;
+      }
+      else if(text.includes("ver")){
+        location.href = links.herramientas;
+      }
+      else if(text.includes("youtube")){
+        location.href = links.canal;
+      }
+    }, 180);
+  });
+});
+</script>
