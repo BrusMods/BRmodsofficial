@@ -124,36 +124,59 @@ const closeMenu = document.getElementById("closeMenu");
 menuBtn.addEventListener("click",()=>sideMenu.classList.add("active"));
 closeMenu.addEventListener("click",()=>sideMenu.classList.remove("active"));
 
-// PARTICLES
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-let sparks=[];
-let particleColor = "#ff0033";
+/// MATRIX PARTICLES
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
 
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
-window.addEventListener("resize",resize);resize();
+let particles = [];
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&£¥§";
+const fontSize = 16;
+const particleColor = "rgba(255, 40, 40, 0.9)"; // rojo matrix
 
-for(let i=0;i<120;i++){
-  sparks.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:Math.random()*100});
+function resize(){
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+// Crear partículas Matrix
+for(let i = 0; i < 140; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vy: Math.random() * 2 + 1,
+    value: chars[Math.floor(Math.random() * chars.length)]
+  });
 }
 
 function animate(){
-  ctx.fillStyle="rgba(0,0,0,0.15)";
+  // Fondo negro con rastro
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
-  sparks.forEach(s=>{
-    s.x+=s.vx;
-    s.y+=s.vy;
-    s.life--;
-    if(s.life<=0){
-      s.x=Math.random()*canvas.width;
-      s.y=Math.random()*canvas.height;
-      s.life=100;
-    }
+
+  ctx.font = fontSize + "px monospace";
+  ctx.shadowBlur = 12;
+  ctx.shadowColor = "red";
+
+  particles.forEach(p => {
+    // Cambiar letra aleatoriamente
+    p.value = chars[Math.floor(Math.random() * chars.length)];
+
     ctx.fillStyle = particleColor;
-    ctx.fillRect(s.x,s.y,2,2);
+    ctx.fillText(p.value, p.x, p.y);
+
+    p.y += p.vy * fontSize;
+
+    if(p.y > canvas.height){
+      p.y = 0;
+      p.x = Math.random() * canvas.width;
+    }
   });
+
   requestAnimationFrame(animate);
 }
+
 animate();
 
 // LOADER SOLO BOTONES DE INICIO
