@@ -98,12 +98,61 @@ header{background:rgba(0,0,0,.55);backdrop-filter:blur(6px);padding:15px 20px;po
 /* FOOTER */
 footer{text-align:center;padding:25px;font-size:12px;color:#ffb3b3;opacity:.8;position:relative;z-index:2;}
 
-/* LOADER BARRA */
-#loader{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:999;}
-.loader-container{width:300px;text-align:center;}
-.loader-bar{width:0%;height:8px;background:linear-gradient(90deg,#ff0033,#ff66aa);border-radius:4px;box-shadow:0 0 10px #ff0033,0 0 20px #ff66aa;transition:width 0.1s linear;}
-.loader-text{color:#fff;margin-top:12px;font-size:16px;font-weight:700;letter-spacing:1px;text-shadow:0 0 5px #ff0033,0 0 10px #ff66aa;}
+//* ===== SPINNER 3D ROJO ===== */
+.spinner{
+  width:48px;
+  height:48px;
+  position:relative;
+  transform-style:preserve-3d;
+  transform:rotate(45deg) rotateX(-25deg) rotateY(25deg);
+  animation:spin 2s infinite ease;
+}
 
+.spinner > div{
+  position:absolute;
+  inset:0;
+  background-color:rgba(255,0,51,0.25);
+  border:2px solid #ff0033;
+  box-shadow:0 0 15px #ff0033;
+}
+
+.spinner > div:nth-child(1){
+  transform:translateZ(-24px) rotateY(180deg);
+}
+
+.spinner > div:nth-child(2){
+  transform:rotateY(-90deg) translateX(50%);
+  transform-origin:right center;
+}
+
+.spinner > div:nth-child(3){
+  transform:rotateY(90deg) translateX(-50%);
+  transform-origin:left center;
+}
+
+.spinner > div:nth-child(4){
+  transform:rotateX(90deg) translateY(-50%);
+  transform-origin:top center;
+}
+
+.spinner > div:nth-child(5){
+  transform:rotateX(-90deg) translateY(50%);
+  transform-origin:bottom center;
+}
+
+.spinner > div:nth-child(6){
+  transform:translateZ(24px);
+}
+
+@keyframes spin{
+  50%{
+    transform:rotate(45deg) rotateX(-385deg) rotateY(25deg);
+  }
+  100%{
+    transform:rotate(45deg) rotateX(-385deg) rotateY(385deg);
+  }
+}
+  
 /* AJUSTES BOTON */
 #musicToggleBtn,#colorToggleBtn{margin-top:10px;padding:10px 15px;border-radius:10px;background:#ff0033;border:none;color:#fff;font-weight:600;cursor:pointer;width:100%;}
 </style>
@@ -164,13 +213,14 @@ footer{text-align:center;padding:25px;font-size:12px;color:#ffb3b3;opacity:.8;po
 
 <footer>© 2025 BRUSMODS</footer>
 
-<div id="loader">
-  <div class="loader-container">
-    <div class="loader-bar"></div>
-    <div class="loader-text">Cargando...</div>
+<div class="loader-container">
+  <div class="spinner">
+    <div></div><div></div><div></div>
+    <div></div><div></div><div></div>
   </div>
+  <div class="loader-text">Cargando...</div>
 </div>
-
+      
 <script>
 // MENÚ
 const menuBtn = document.getElementById("menuBtn");
