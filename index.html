@@ -257,54 +257,78 @@ const closeMenu = document.getElementById("closeMenu");
 menuBtn.addEventListener("click",()=>sideMenu.classList.add("active"));
 closeMenu.addEventListener("click",()=>sideMenu.classList.remove("active"));
 
-// MATRIX LIMPIO - ESTILO PARTICULAS
+ // PARTICULAS
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&£¥§";
-const fontSize = 16;
-const color = "#ff0033";
+let particles = [];
+const PARTICLE_COUNT = 30;
+const color = "255,0,51";
 
-let columns;
-let drops = [];
-
-function resize() {
+function resize(){
   canvas.width = innerWidth;
   canvas.height = innerHeight;
-  columns = Math.floor(canvas.width / fontSize);
-  drops = [];
-  for (let i = 0; i < columns; i++) {
-    drops[i] = Math.random() * canvas.height;
-  }
 }
 window.addEventListener("resize", resize);
 resize();
 
-function animate() {
-  // Fondo negro REAL (igual que tus partículas)
-  ctx.fillStyle = "rgba(0,0,0,0.25)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+class Particle{
+  constructor(){
+    this.reset();
+  }
 
-  ctx.font = fontSize + "px monospace";
-  ctx.fillStyle = color;
-  ctx.shadowBlur = 0; // CLAVE: sin brillo
+  reset(){
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height + Math.random() * 200;
+    this.size = Math.random() * 40 + 10;
+    this.speed = Math.random() * 0.6 + 0.3;
+    this.rotation = Math.random() * 360;
+    this.rotationSpeed = Math.random() * 1 - 0.5;
+    this.opacity = Math.random() * 0.4 + 0.1;
+  }
 
-  for (let i = 0; i < drops.length; i++) {
-    const text = chars[Math.floor(Math.random() * chars.length)];
-    ctx.fillText(text, i * fontSize, drops[i]);
+  update(){
+    this.y -= this.speed;
+    this.rotation += this.rotationSpeed;
 
-    drops[i] += 0.6; // VELOCIDAD LENTA
-
-    if (drops[i] > canvas.height) {
-      drops[i] = 0;
+    if(this.y < -this.size){
+      this.reset();
     }
   }
+
+  draw(){
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation * Math.PI / 180);
+    ctx.fillStyle = `rgba(${color},${this.opacity})`;
+    ctx.strokeStyle = `rgba(${color},0.5)`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.rect(-this.size/2, -this.size/2, this.size, this.size);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+// crear partículas
+for(let i=0;i<PARTICLE_COUNT;i++){
+  particles.push(new Particle());
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p=>{
+    p.update();
+    p.draw();
+  });
 
   requestAnimationFrame(animate);
 }
 
 animate();
-
+  
 // LOADER CON SPINNER 3D (FIX FINAL)
 const loader = document.getElementById("loader");
 
