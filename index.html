@@ -304,22 +304,26 @@ function animate() {
 
 animate();
 
-// LOADER SOLO BOTONES DE INICIO
-const loader=document.getElementById("loader");
-const loaderBar=loader.querySelector(".loader-bar");
+// LOADER CON SPINNER 3D (FIX FINAL)
+const loader = document.getElementById("loader");
+
 document.querySelectorAll(".loader-btn").forEach(btn=>{
-  btn.addEventListener("click",e=>{
+  btn.addEventListener("click", e=>{
+    const url = btn.getAttribute("href");
+    if (!url) return;
+
     e.preventDefault();
-    const url=btn.getAttribute("href");
-    loader.style.display="flex";
-    loaderBar.style.width="0%";
-    let width=0;
-    const interval=setInterval(()=>{
-      width+=1;
-      loaderBar.style.width=width+"%";
-      if(width>=100){clearInterval(interval);window.location.href=url;}
-    },30);
+    loader.style.display = "flex";
+
+    setTimeout(()=>{
+      window.location.href = url;
+    }, 1300); // tiempo del loader
   });
+});
+
+// ocultar loader al volver
+window.addEventListener("pageshow", ()=>{
+  loader.style.display = "none";
 });
 
 // Ocultar loader al cargar o volver
