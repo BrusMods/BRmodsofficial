@@ -25,7 +25,7 @@ header {
   padding: 16px 24px;
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 100;
+  z-index: 200; /* Mayor z-index para que quede SOBRE el menú cuando está abierto */
   border-bottom: 1px solid rgba(1,53,255,0.25);
   display: flex;
   align-items: center;
@@ -37,9 +37,9 @@ header {
 
 /* MENÚ BTN CON ANIMACIÓN A X */
 .menu-btn {
-  background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 6px; position: relative; z-index: 101;
+  background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 6px; position: relative; z-index: 201;
 }
-.menu-btn span { width: 32px; height: 3px; background: #00aaff; border-radius: 2px; transition: all 0.3s; }
+.menu-btn span { width: 32px; height: 3px; background: #00aaff; border-radius: 2px; transition: all 0.3s ease; }
 .menu-btn.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
 .menu-btn.active span:nth-child(2) { opacity: 0; transform: scale(0); }
 .menu-btn.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
@@ -49,7 +49,8 @@ header {
   position: fixed; top: 0; right: -320px; width: 320px; height: 100vh;
   background: rgba(5,5,30,0.94); backdrop-filter: blur(16px);
   transition: right 0.45s cubic-bezier(0.16,1,0.3,1);
-  z-index: 99; padding: 80px 30px 30px; border-left: 1px solid rgba(1,53,255,0.35);
+  z-index: 100; /* Menor que el header para que el header quede encima */
+  padding: 80px 30px 30px; border-left: 1px solid rgba(1,53,255,0.35);
 }
 .side-menu.active { right: 0; }
 .side-menu h3 { color: #00aaff; font-size: 1.4rem; margin-bottom: 1.5rem; letter-spacing: 1px; }
@@ -59,12 +60,12 @@ header {
 }
 .side-menu a:hover { color: #fff; background: rgba(1,53,255,0.15); transform: translateX(8px); }
 
-/* Botón de música mejorado (sin emojis, con animación) */
+/* Botón de música */
 #musicToggleBtn {
   width: 100%; padding: 14px 20px; margin: 12px 0; border: none; border-radius: 14px;
   background: linear-gradient(135deg, #0135FF, #0088ff); color: white; font-weight: 700;
   cursor: pointer; transition: all 0.35s; box-shadow: 0 4px 15px rgba(1,53,255,0.5);
-  display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
   position: relative; overflow: hidden;
 }
 #musicToggleBtn::before {
@@ -78,12 +79,12 @@ header {
 
 /* CLOSE MENU */
 .close-menu {
-  position: absolute; top: 20px; right: 25px; background: none; border: none; color: #00aaff; font-size: 2rem; font-weight: bold; cursor: pointer;
+  position: absolute; top: 20px; right: 25px; background: none; border: none; color: #00aaff; font-size: 2.5rem; font-weight: bold; cursor: pointer;
   transition: all 0.3s;
 }
-.close-menu:hover { color: #fff; transform: scale(1.2); }
+.close-menu:hover { color: #fff; transform: rotate(90deg) scale(1.2); }
 
-/* HERO */
+/* HERO, CARDS, FOOTER, LOADER (mantengo lo mejorado anterior) */
 .hero { position: relative; z-index: 2; text-align: center; padding: 140px 20px 80px; min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .hero h1 {
   font-size: clamp(2.8rem, 9vw, 5rem); font-weight: 900; margin: 0;
@@ -92,16 +93,15 @@ header {
   background-size: 200% 100%; animation: shine 6s linear infinite;
   text-shadow: 0 0 30px rgba(0,170,255,0.6);
 }
-@keyframes shine { 0% { background-position: 0% } 50% { background-position: -200% } 100% { background-position: 0% } }
+@keyframes shine { 0%, 100% { background-position: 0% } 50% { background-position: -200% } }
 
 .hero p { font-size: 1.3rem; color: #b0e0ff; max-width: 600px; margin: 1.2rem auto; opacity: 0.95; }
 
-/* BOTÓN NEON */
 .btn-neon {
   position: relative; padding: 16px 40px; font-size: 1.2rem; font-weight: 700;
   color: #00aaff; text-decoration: none; border: 2px solid #00aaff; border-radius: 50px;
   background: rgba(1,53,255,0.08); overflow: hidden; transition: all 0.4s;
-  box-shadow: 0 0 20px rgba(0,170,255,0.4); cursor: pointer; display: inline-block;
+  box-shadow: 0 0 20px rgba(0,170,255,0.4); display: inline-block;
 }
 .btn-neon::before {
   content: ''; position: absolute; inset: -2px; background: linear-gradient(45deg, #0135FF, #00aaff, #40c4ff, #0135FF);
@@ -110,7 +110,6 @@ header {
 }
 .btn-neon:hover { color: white; transform: translateY(-4px) scale(1.06); box-shadow: 0 0 40px #00aaff; }
 
-/* CARDS */
 .section {
   position: relative; z-index: 2; max-width: 1200px; margin: 0 auto 60px; padding: 0 20px;
   display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px;
@@ -122,10 +121,9 @@ header {
 }
 .card:hover { transform: translateY(-12px) scale(1.04); box-shadow: 0 20px 60px rgba(1,53,255,0.35); }
 
-/* FOOTER */
 footer { text-align: center; padding: 40px 20px; font-size: 1rem; color: #40c4ff; opacity: 0.8; }
 
-/* LOADER (mejorado con glow y rotación más chida) */
+/* LOADER */
 #loader {
   position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none;
   align-items:center; justify-content:center; z-index:9999; backdrop-filter: blur(10px);
@@ -223,7 +221,7 @@ footer { text-align: center; padding: 40px 20px; font-size: 1rem; color: #40c4ff
 </div>
 
 <script>
-// PARTICULAS
+// PARTICULAS (hexágonos)
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 let particles = [];
@@ -280,10 +278,12 @@ animateParticles();
 const menuBtn = document.getElementById("menuBtn");
 const sideMenu = document.getElementById("sideMenu");
 const closeMenu = document.getElementById("closeMenu");
+
 menuBtn.addEventListener("click", () => {
-  sideMenu.classList.add("active");
-  menuBtn.classList.add("active");
+  sideMenu.classList.toggle("active");
+  menuBtn.classList.toggle("active");
 });
+
 closeMenu.addEventListener("click", () => {
   sideMenu.classList.remove("active");
   menuBtn.classList.remove("active");
@@ -298,7 +298,6 @@ let musicOn = true;
 let musicStarted = false;
 
 menuBtn.addEventListener("click", () => {
-  sideMenu.classList.add("active");
   if (!musicStarted) {
     backgroundMusic.play().catch(() => {});
     musicStarted = true;
@@ -334,7 +333,7 @@ document.querySelectorAll(".loader-btn").forEach(btn => {
 });
 window.addEventListener("pageshow", () => loader.style.display = "none");
 
-// POPUP KEY (Mods VIP) con animación chida
+// POPUP KEY (Mods VIP)
 const validKeys = ["BRprogamer","Brusmods45gg","Brusmods23gg","BrusmodsVIP"];
 const secretLink = "https://brusmods.github.io/En-mantenimiento-/";
 
@@ -377,7 +376,7 @@ document.querySelectorAll(".vip-btn").forEach(btn => {
   btn.onclick = e => { e.preventDefault(); showKeyPopup(); };
 });
 
-// POPUP WHATSAPP con animación chida
+// POPUP WHATSAPP
 const whatsappLink = "https://chat.whatsapp.com/CkN3rWTIQeHF293yhpWkLb";
 
 function showWhatsappPopup() {
