@@ -32,8 +32,14 @@ header {
   justify-content: space-between;
 }
 .top { display: flex; align-items: center; gap: 16px; }
-.top img { height: 58px; filter: brightness(0) invert(1) drop-shadow(0 0 8px #ccc); }
-.brand { font-size: 26px; font-weight: 900; letter-spacing: 1px; background: linear-gradient(90deg, #ddd, #fff, #ddd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+/* BUSCA ESTA PARTE EN TU CÓDIGO Y REEMPLÁZALA */
+.top img { 
+  height: 58px; 
+  /* Eliminamos el brillo e inversión para que se vea tu imagen real */
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); 
+  border-radius: 50%; /* Esto mantiene el borde circular si tu logo es redondo */
+  object-fit: contain; /* Asegura que la imagen no se deforme */
+}
 
 /* MENÚ BTN */
 .menu-btn {
